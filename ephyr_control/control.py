@@ -92,6 +92,20 @@ class LangStreamControl:
         self.trn.volume(0.0)
         self.org.volume(1.0)
 
+    def mute_all(self):
+        self.trn.volume(0.0)
+        self.org.volume(0.0)
+
+    def mute_org(self):
+        self.org.volume(0.0)
+
+    def mute_trn(self):
+        self.trn.volume(0.0)
+
+    def unmute_all_sreams(self):
+        self.trn.volume(1.0)
+        self.org.volume(1.0)
+
     @classmethod
     def build(cls, lang_code: str, stream: LangStreamConfig):
         return cls(
