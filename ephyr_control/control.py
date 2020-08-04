@@ -35,6 +35,7 @@ class StreamCommunicator:
 
         self.conn: Optional[zmq.Socket] = None
         self.curr_volume: Optional[float] = None
+        self.vol_state: Optional[float] = None
 
     def __str__(self):
         return f"StreamCommunicator <{self.type}-{self.lang_code}: {self._config.ip_address}>"
@@ -93,18 +94,22 @@ class LangStreamControl:
         self.org.volume(1.0)
 
     def mute_all(self):
+        self.trn.vol_state = self.trn.curr_volume
+        self.org.vol_state = self.org.curr_volume
         self.trn.volume(0.0)
         self.org.volume(0.0)
 
     def mute_org(self):
+        self.org.vol_state = self.org.curr_volume
         self.org.volume(0.0)
 
     def mute_trn(self):
+        self.trn.vol_state = self.trn.curr_volume
         self.trn.volume(0.0)
 
     def unmute_all_sreams(self):
-        self.trn.volume(1.0)
-        self.org.volume(1.0)
+        self.trn.volume(self.trn.vol_state)
+        self.org.volume(self.org.vol_state)
 
     @classmethod
     def build(cls, lang_code: str, stream: LangStreamConfig):
