@@ -51,8 +51,11 @@ class StreamCommunicator:
     def is_connected(self) -> bool:
         return bool(self.conn)
 
+    def _create_conn(self):
+        return create_conn(self.zmq_host, self.zmq_port)
+
     def connect(self) -> bool:
-        self.conn = create_conn(self.zmq_host, self.zmq_port)
+        self.conn = self._create_conn()
         self.to_default()
         return self.is_connected
 
@@ -107,7 +110,7 @@ class LangStreamControl:
         self.trn.vol_state = self.trn.curr_volume
         self.trn.volume(0.0)
 
-    def unmute_all_sreams(self):
+    def unmute_all(self):
         self.trn.volume(self.trn.vol_state)
         self.org.volume(self.org.vol_state)
 
