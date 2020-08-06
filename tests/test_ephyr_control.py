@@ -35,3 +35,16 @@ def lang_stream_control(lang_stream_config):
     lsc = LangStreamControl("ru", org, trn)
     lsc.connect()
     return lsc
+
+
+def test_volume_mute_and_unmute(lang_stream_control):
+    lang_stream_control.trn.curr_volume = 1.0
+    lang_stream_control.org.curr_volume = 0.3
+
+    lang_stream_control.mute_all()
+    assert lang_stream_control.trn.curr_volume == 0.0
+    assert lang_stream_control.org.curr_volume == 0.0
+
+    lang_stream_control.unmute_all()
+    assert lang_stream_control.trn.curr_volume == 1.0
+    assert lang_stream_control.org.curr_volume == 0.3
