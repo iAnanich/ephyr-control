@@ -68,7 +68,10 @@ class StreamCommunicator:
 
 class LangStreamControl:
     def __init__(
-        self, lang_code: str, org: StreamCommunicator, trn: StreamCommunicator,
+        self,
+        lang_code: str,
+        org: StreamCommunicator,
+        trn: StreamCommunicator,
     ):
         self.lang_code = lang_code
         self.org = org
@@ -128,7 +131,8 @@ class LangStreamControl:
 
 class EphyrStreamControl:
     def __init__(
-        self, lang_streams: Dict[str, LangStreamControl],
+        self,
+        lang_streams: Dict[str, LangStreamControl],
     ):
         self.lang_streams = lang_streams
 
